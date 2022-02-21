@@ -1,4 +1,4 @@
-mt-evaluation-metric
+mt-metrics
 =========
 Implement four evaluation methods for machine translation. Most open source evaluation programs writed by Python, therefore, I rewrite the methods with Kotlin.
 
