@@ -1,6 +1,7 @@
 import com.newtranx.eval.enum.Language
 import com.newtranx.eval.metrics.MetricUtil
 import com.newtranx.eval.metrics.nltk.Meteor
+import org.junit.Before
 import org.junit.Test
 
 /**
@@ -15,7 +16,14 @@ class Tester {
         private val ref2 = listOf("中国是我", "我爱吃水果")
         val language = Language.ZH
         val references = listOf(ref1, ref2)
+        val path = Meteor::class.java.getResource("/wordnet").path
+        val wordnet = MetricUtil.buildWordnet(path)
     }
+
+    @Before
+    fun prepare() {
+    }
+
     @Test
     fun testBleu() {
         val bleu = MetricUtil.buildBleuMetric(language)
@@ -40,9 +48,18 @@ class Tester {
 
     @Test
     fun testMeteor() {
-        val path = Meteor::class.java.getResource("/wordnet").path
-        val meteor = MetricUtil.buildMeteorMetric(path, language)
+        val meteor = MetricUtil.buildMeteorMetric(wordnet, language)
         val score = meteor.corpusScore(hypothesis, references)
+        println(score)
+    }
+
+    @Test
+    fun testMeteorSingle() {
+        val meteor = Meteor(wordnet = wordnet)
+        val score = meteor.singleMeteorScore(
+            "It is a guide to action which ensures that the military always obeys the commands of the party",
+            "It is a guide to action which ensures that the military always obeys the commands of the party"
+        )
         println(score)
     }
 }

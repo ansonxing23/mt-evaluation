@@ -2,6 +2,8 @@ package com.newtranx.eval.metrics.nltk
 
 import com.newtranx.eval.metrics.EvaScore
 import com.newtranx.eval.metrics.IEvaluate
+import com.newtranx.eval.metrics.MetricUtil
+import edu.mit.jwi.IDictionary
 import edu.mit.jwi.RAMDictionary
 import edu.mit.jwi.data.ILoadPolicy
 import edu.mit.jwi.item.POS
@@ -33,14 +35,13 @@ import kotlin.math.pow
  */
 class Meteor(
     val stemmer: SnowballProgram = PorterStemmer(),
-    val wordnetPath: String,
+    val wordnet: IDictionary,
     val asianSupport: Boolean = false,
     var lowercase: Boolean = true,
     val alpha: Float = 0.9F,
     val beta: Int = 3,
     val gamma: Float = 0.5F
 ) : IEvaluate {
-    private val wordnet = RAMDictionary(File(URLDecoder.decode(wordnetPath, "UTF-8")), ILoadPolicy.IMMEDIATE_LOAD)
     private val wordnetStemmer = WordnetStemmer(wordnet)
 
     companion object {
@@ -317,38 +318,4 @@ class Meteor(
         hypothesisSyns.add(lemma)
         return hypothesisSyns
     }
-}
-
-fun main() {
-//    val stemmer = EnglishStemmer()
-//    stemmer.current = "obeys"
-//    stemmer.stem()
-//    println(stemmer.current)
-//    val set = getSynSet("obeys")
-//    set.forEach {
-//        println(it)
-//    }
-//    val path = Meteor.javaClass.getResource("/wordnet").path
-//    val dictPath = URLDecoder.decode(path, "utf-8")
-//    val dict = RAMDictionary(File(dictPath), ILoadPolicy.NO_LOAD);
-//    println(path)
-//    dict.open()
-//    val idxWord = dict.getIndexWord("always", POS.NOUN);
-//    val wordID = idxWord.wordIDs[0]
-//    val word = dict.getWord(wordID)
-//    println("Id = " + wordID);
-//    println(" Lemma = " + word.getLemma());
-//
-//    val synset = word.synset
-//    for (syn in synset.words) {
-//        println(syn)
-//        println(syn.lemma)
-//    }
-    val path = Meteor::class.java.getResource("/wordnet").path
-    val meteor = Meteor(wordnetPath = path)
-    val score = meteor.singleMeteorScore(
-        "It is a guide to action which ensures that the military always obeys the commands of the party",
-        "It is a guide to action which ensures that the military always obeys the commands of the party"
-    )
-    println(score)
 }

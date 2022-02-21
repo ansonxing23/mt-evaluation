@@ -6,7 +6,12 @@ import com.newtranx.eval.metrics.nltk.Nist
 import com.newtranx.eval.metrics.sacre.Bleu
 import com.newtranx.eval.metrics.sacre.Ter
 import com.newtranx.eval.tokenizers.TokenizerUtil
+import edu.mit.jwi.IDictionary
+import edu.mit.jwi.RAMDictionary
+import edu.mit.jwi.data.ILoadPolicy
 import org.tartarus.snowball.ext.*
+import java.io.File
+import java.net.URLDecoder
 
 /**
  * @Author: anson
@@ -47,7 +52,7 @@ class MetricUtil {
         }
 
         fun buildMeteorMetric(
-            wordnetPath: String,
+            wordnet: IDictionary,
             language: Language,
             lowercase: Boolean = true,
             alpha: Float = 0.9F,
@@ -60,7 +65,7 @@ class MetricUtil {
                 else -> false
             }
             return Meteor(
-                wordnetPath = wordnetPath,
+                wordnet = wordnet,
                 stemmer = stemmer,
                 asianSupport = asianSupport,
                 lowercase = lowercase,
@@ -68,6 +73,10 @@ class MetricUtil {
                 beta = beta,
                 gamma = gamma
             )
+        }
+
+        fun buildWordnet(path: String): RAMDictionary {
+            return RAMDictionary(File(URLDecoder.decode(path, "UTF-8")), ILoadPolicy.IMMEDIATE_LOAD)
         }
 
         private fun findStemmer(language: Language) = when (language) {
