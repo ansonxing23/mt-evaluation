@@ -44,7 +44,7 @@ abstract class Base : IEvaluate {
         val stats = extractCorpusStatistics(
             listOf(hypothesis), references.map { refs -> listOf(refs) }
         )
-        return aggregateAndCompute(stats)
+        return aggregateAndCompute(stats, true)
     }
 
     /**
@@ -56,7 +56,7 @@ abstract class Base : IEvaluate {
      * will be used.
      * @return A list where each sublist corresponds to segment statistics.
      */
-    fun extractCorpusStatistics(
+    private fun extractCorpusStatistics(
         hypothesis: List<String>,
         references: List<List<String>>
     ): MutableList<List<Double>> {
@@ -130,7 +130,7 @@ abstract class Base : IEvaluate {
         return refCache
     }
 
-    abstract fun aggregateAndCompute(stats: List<List<Double>>): Score
+    abstract fun aggregateAndCompute(stats: List<List<Double>>, sentenceLevel: Boolean = false): Score
 
     abstract fun preprocessSegment(sent: String): String
 

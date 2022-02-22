@@ -41,9 +41,9 @@ data class Bleu(
     }
 
     override fun sentenceScore(hypothesis: String, references: List<String>): BLEUScore {
-        logger.warning("It is recommended to enable `effective_order` for sentence-level BLEU.")
-            .takeIf { !effectiveOrder }
-        return sentenceScore(hypothesis, references)
+//        logger.warning("It is recommended to enable `effectiveOrder` for sentence-level BLEU.")
+//            .takeIf { !effectiveOrder }
+        return super.sentenceScore(hypothesis, references) as BLEUScore
     }
 
     /**
@@ -51,8 +51,8 @@ data class Bleu(
      * @param stats: A list of segment-level statistics
      * @return A `BLEUScore` instance.
      */
-    override fun aggregateAndCompute(stats: List<List<Double>>): BLEUScore {
-        return computeScoreFromStats(sumOfLists(stats))
+    override fun aggregateAndCompute(stats: List<List<Double>>, sentenceLevel: Boolean): BLEUScore {
+        return computeScoreFromStats(sumOfLists(stats), sentenceLevel)
     }
 
     /**
@@ -60,7 +60,7 @@ data class Bleu(
      * @param stats: A list or numpy array of segment-level statistics.
      * @return A `BLEUScore` object.
      */
-    private fun computeScoreFromStats(stats: List<Double>): BLEUScore {
+    private fun computeScoreFromStats(stats: List<Double>, sentenceLevel: Boolean): BLEUScore {
         return computeBleu(
             correct = stats.subList(2, 2 + maxNgramOrder).toMutableList(),
             total = stats.subList(2 + maxNgramOrder, stats.size).toMutableList(),
@@ -68,7 +68,7 @@ data class Bleu(
             refLen = stats[1],
             smoothMethod = smoothMethod,
             smoothValue = smoothValue,
-            effectiveOrder = effectiveOrder
+            effectiveOrder = true.takeIf { sentenceLevel } ?: effectiveOrder
         )
     }
 

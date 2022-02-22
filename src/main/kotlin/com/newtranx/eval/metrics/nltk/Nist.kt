@@ -17,7 +17,7 @@ class Nist(
 ) : IEvaluate {
 
     override fun sentenceScore(hypothesis: String, references: List<String>): EvaScore {
-        return corpusScore(listOf(hypothesis), listOf(references))
+        return corpusScore(listOf(hypothesis), references.map { listOf(it) })
     }
 
     override fun corpusScore(hypes: List<String>, refs: List<List<String>>): EvaScore {

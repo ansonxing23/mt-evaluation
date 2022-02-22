@@ -22,7 +22,7 @@ data class Ter(
         caseSensitive = this.caseSensitive
     )
 
-    override fun aggregateAndCompute(stats: List<List<Double>>): TerScore {
+    override fun aggregateAndCompute(stats: List<List<Double>>, sentenceLevel: Boolean): TerScore {
         return computeScoreFromStats(sumOfLists(stats))
     }
 
