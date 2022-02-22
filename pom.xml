@@ -9,7 +9,8 @@
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>mt-evaluation</name>
+    <name>mt-metrics</name>
+    <description>evaluation methods for machine translation</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -23,6 +24,13 @@
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
     </repositories>
+
+    <developers>
+        <developer>
+            <name>Anson</name>
+            <organization>Newtranx</organization>
+        </developer>
+    </developers>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
@@ -78,12 +86,6 @@
                             <mainClass>com.newtranx.eval.MainKt</mainClass>
                         </manifest>
                     </archive>
-                    <!--这部分可有可无,加上的话则直接生成可运行jar包-->
-                    <!--<archive>-->
-                    <!--<manifest>-->
-                    <!--<mainClass>${exec.mainClass}</mainClass>-->
-                    <!--</manifest>-->
-                    <!--</archive>-->
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
@@ -102,13 +104,6 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.exc</include>
-                    <include>**/*.bib</include>
-                    <include>**/*.rev</include>
-                    <include>**/data.*</include>
-                    <include>**/index.*</include>
-                </includes>
             </resource>
         </resources>
     </build>
