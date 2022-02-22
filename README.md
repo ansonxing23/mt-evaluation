@@ -17,6 +17,7 @@ Implement four evaluation methods for machine translation. Most open source eval
 * KO("ko", "Korean")
 
 ## Usage
+### Corpus Level
 BLEU
 ```
 val hypothesis = listOf("how are you?", "I'm fine!")
@@ -33,7 +34,6 @@ TER
 val hypothesis = listOf("how are you?", "I'm fine!")
 val ref1 = listOf("how are you?", "I'm fine!")
 val ref2 = listOf("how do you do?", "I'm ok!")
-val language = Language.EN
 val references = listOf(ref1, ref2)
 val ter = MetricUtil.buildTerMetric(normalized = true, asianSupport = true)
 val score = ter.corpusScore(hypothesis, references)
@@ -59,8 +59,46 @@ NIST
 val hypothesis = listOf("how are you?", "I'm fine!")
 val ref1 = listOf("how are you?", "I'm fine!")
 val ref2 = listOf("how do you do?", "I'm ok!")
-val language = Language.EN
 val references = listOf(ref1, ref2)
 val nist = MetricUtil.buildNistMetric(asianSupport = true)
 val score = nist.corpusScore(hypothesis, references)
+```
+
+### Sentence Level
+BLEU
+```
+val hypothesis = "how are you?"
+val references = listOf("how are you?", "how do you do?")
+val language = Language.EN
+val bleu = MetricUtil.buildBleuMetric(language)
+val score = bleu.sentenceScore(hypothesis, references)
+```
+
+TER
+```
+val hypothesis = "how are you?"
+val references = listOf("how are you?", "how do you do?")
+val ter = MetricUtil.buildTerMetric(normalized = true, asianSupport = true)
+val score = ter.sentenceScore(hypothesis, references)
+```
+
+METEOR
+```
+val hypothesis = "how are you?"
+val references = listOf("how are you?", "how do you do?")
+val language = Language.EN
+
+val path = "/home/wordnet"
+val wordnet = MetricUtil.buildWordnet(path)
+val meteor = MetricUtil.buildMeteorMetric(wordnet, language)
+val score = meteor.sentenceScore(hypothesis, references)
+```
+
+
+NIST
+```
+val hypothesis = "how are you?"
+val references = listOf("how are you?", "how do you do?")
+val nist = MetricUtil.buildNistMetric(asianSupport = true)
+val score = nist.sentenceScore(hypothesis, references)
 ```
