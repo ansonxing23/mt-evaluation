@@ -1,6 +1,6 @@
 package com.newtranx.eval.tokenizers
 
-import com.newtranx.eval.enum.Language
+import com.newtranx.eval.metrics.enums.Language
 import edu.stanford.nlp.pipeline.CoreDocument
 import edu.stanford.nlp.pipeline.StanfordCoreNLP
 import java.util.*
@@ -21,7 +21,7 @@ class TokenizerEuro(
     init {
         props.setProperty("annotators", "tokenize")
         props.setProperty("tokenize.options", "splitHyphenated=false,americanize=false")
-        props.setProperty("tokenize.language", language.value)
+        props.setProperty("tokenize.language", language.name)
         pipeline = StanfordCoreNLP(props)
     }
 

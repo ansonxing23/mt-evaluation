@@ -1,7 +1,6 @@
-import com.newtranx.eval.enum.Language
 import com.newtranx.eval.metrics.MetricUtil
+import com.newtranx.eval.metrics.enums.Language
 import com.newtranx.eval.metrics.nltk.Meteor
-import org.junit.Before
 import org.junit.Test
 
 /**

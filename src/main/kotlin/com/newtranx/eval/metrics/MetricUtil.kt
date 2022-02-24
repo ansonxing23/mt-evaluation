@@ -1,6 +1,6 @@
 package com.newtranx.eval.metrics
 
-import com.newtranx.eval.enum.Language
+import com.newtranx.eval.metrics.enums.Language
 import com.newtranx.eval.metrics.nltk.Meteor
 import com.newtranx.eval.metrics.nltk.Nist
 import com.newtranx.eval.metrics.sacre.Bleu
@@ -19,6 +19,7 @@ import java.net.URLDecoder
  */
 class MetricUtil {
     companion object {
+        @JvmStatic
         fun buildBleuMetric(language: Language): IEvaluate {
             val tokenizer = TokenizerUtil.buildTokenizer(language)
             return Bleu(
@@ -27,6 +28,7 @@ class MetricUtil {
             )
         }
 
+        @JvmStatic
         fun buildTerMetric(
             normalized: Boolean = false,
             noPunct: Boolean = false,
@@ -41,6 +43,7 @@ class MetricUtil {
             )
         }
 
+        @JvmStatic
         fun buildNistMetric(
             asianSupport: Boolean = false,
             nGram: Int = 5
@@ -51,6 +54,7 @@ class MetricUtil {
             )
         }
 
+        @JvmStatic
         fun buildMeteorMetric(
             wordnet: IDictionary,
             language: Language,
@@ -75,6 +79,7 @@ class MetricUtil {
             )
         }
 
+        @JvmStatic
         fun buildWordnet(path: String): RAMDictionary {
             return RAMDictionary(File(URLDecoder.decode(path, "UTF-8")), ILoadPolicy.IMMEDIATE_LOAD)
         }

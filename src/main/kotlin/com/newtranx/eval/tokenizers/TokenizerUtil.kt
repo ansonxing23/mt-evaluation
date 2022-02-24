@@ -1,6 +1,6 @@
 package com.newtranx.eval.tokenizers
 
-import com.newtranx.eval.enum.Language
+import com.newtranx.eval.metrics.enums.Language
 
 /**
  * @Author: anson
