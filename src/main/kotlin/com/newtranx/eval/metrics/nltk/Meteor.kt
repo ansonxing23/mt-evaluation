@@ -33,7 +33,7 @@ import kotlin.math.pow
  * :type gamma: float
  * :return: The sentence-level METEOR score.
  */
-class Meteor(
+class Meteor @JvmOverloads constructor(
     val stemmer: SnowballProgram = PorterStemmer(),
     val wordnet: IDictionary,
     val asianSupport: Boolean = false,
@@ -55,19 +55,30 @@ class Meteor(
     override fun sentenceScore(hypothesis: String, references: List<String>): EvaScore {
         val score = references.map { reference ->
             singleMeteorScore(hypothesis, reference)
-        }.maxOrNull() ?: 0F
+        }.maxOrNull() ?: 0.0
         return EvaScore(score)
     }
 
     override fun corpusScore(hypotheses: List<String>, references: List<List<String>>): EvaScore {
-        val total = hypotheses.indices.map { i ->
+        val totalHyp = hypotheses.size
+        references.forEach {
+            if (totalHyp != it.size)
+                throw Exception("The number of hypotheses and their reference(s) should be the same")
+        }
+        val listOfReferences = (0 until totalHyp).map { i ->
+            val part = references.size
+            (0 until part).map { j ->
+                references[j][i]
+            }
+        }
+        val total = hypotheses.indices.sumOf { i ->
             val hypothesis = hypotheses[i]
-            val refs = references[i]
+            val refs = listOfReferences[i]
             val score = refs.map { ref ->
                 singleMeteorScore(hypothesis, ref)
-            }.maxOrNull() ?: 0F
+            }.maxOrNull() ?: 0.0
             score
-        }.sum()
+        }
         val score = total / hypotheses.size
         return EvaScore(score)
     }
@@ -81,7 +92,7 @@ class Meteor(
      * :type preprocess: method
      * :rtype: float
      */
-    fun singleMeteorScore(hypothesis: String, reference: String): Float {
+    fun singleMeteorScore(hypothesis: String, reference: String): Double {
         val enumHypothesis = generateEnums(hypothesis)
         val enumReference = generateEnums(reference)
         val translationLength = enumHypothesis.size
@@ -90,15 +101,15 @@ class Meteor(
         val matchesCount = matches.size
 
         return try {
-            val precision = matchesCount.toFloat() / translationLength
-            val recall = matchesCount.toFloat() / referenceLength
+            val precision = matchesCount.toDouble() / translationLength
+            val recall = matchesCount.toDouble() / referenceLength
             val fMean = (precision * recall) / (alpha * precision + (1 - alpha) * recall)
-            val chunkCount = countChunks(matches).toFloat()
+            val chunkCount = countChunks(matches).toDouble()
             val fragFrac = chunkCount / matchesCount
             val penalty = gamma * fragFrac.pow(beta)
             (1 - penalty) * fMean
         } catch (e: Exception) {
-            0F
+            0.0
         }
     }
 

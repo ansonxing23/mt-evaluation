@@ -8,6 +8,8 @@ import com.newtranx.eval.metrics.enums.Language
  */
 class TokenizerUtil {
     companion object {
+        @JvmStatic
+        @JvmOverloads
         fun buildTokenizer(language: Language): ITokenizer {
             return when (language) {
                 Language.DE, Language.EN,

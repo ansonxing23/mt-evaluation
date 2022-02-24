@@ -21,7 +21,7 @@ import kotlin.math.*
  * @param use_effective_order: Don't take into account n-gram orders without any match.
  * @return Returns a `BLEUScore` object.
  */
-data class Bleu(
+data class Bleu @JvmOverloads constructor(
     var lowercase: Boolean = false,
     val tokenizer: ITokenizer,
     override var force: Boolean = false,

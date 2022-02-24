@@ -7,7 +7,7 @@ package com.newtranx.eval.metrics
 abstract class Score()
 
 data class EvaScore(
-    var score: Float
+    var score: Double
 ) : Score()
 
 data class BLEUScore(

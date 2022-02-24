@@ -9,7 +9,7 @@ import com.newtranx.eval.utils.translationEditRate
  * @Author: anson
  * @Date: 2022/2/1 4:26 PM
  */
-data class Ter(
+class Ter @JvmOverloads constructor(
     val normalized: Boolean = false,
     val noPunct: Boolean = false,
     val asianSupport: Boolean = false,

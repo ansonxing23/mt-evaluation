@@ -29,6 +29,7 @@ class MetricUtil {
         }
 
         @JvmStatic
+        @JvmOverloads
         fun buildTerMetric(
             normalized: Boolean = false,
             noPunct: Boolean = false,
@@ -44,6 +45,7 @@ class MetricUtil {
         }
 
         @JvmStatic
+        @JvmOverloads
         fun buildNistMetric(
             asianSupport: Boolean = false,
             nGram: Int = 5
@@ -55,6 +57,7 @@ class MetricUtil {
         }
 
         @JvmStatic
+        @JvmOverloads
         fun buildMeteorMetric(
             wordnet: IDictionary,
             language: Language,

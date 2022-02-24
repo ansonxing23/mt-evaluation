@@ -21,7 +21,7 @@ const val BEAM_WIDTH = 25F
 // Our own limits
 const val MAX_CACHE_SIZE = 10000
 const val MAX_SHIFT_CANDIDATES = 1000
-const val INT_INFINITY = Int.MAX_VALUE
+const val INT_INFINITY = Int.MAX_VALUE - 10000
 
 const val OP_INS = 'i'
 const val OP_DEL = 'd'

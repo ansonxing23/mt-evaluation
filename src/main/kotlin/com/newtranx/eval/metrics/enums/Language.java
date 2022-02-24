@@ -2,7 +2,7 @@ package com.newtranx.eval.metrics.enums;
 
 /**
  * @Author Anson
- * @Date 2022/2/24 11:01
+ * @Date 2022/2/24 21:22
  * @Version 1.0
  */
 public enum Language {
@@ -13,6 +13,7 @@ public enum Language {
 
     private String code;
     private String name;
+
     Language(String code, String name) {
         this.code = code;
         this.name = name;

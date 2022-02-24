@@ -11,7 +11,7 @@ import kotlin.math.*
  * @Author: anson
  * @Date: 2022/2/19 2:36 PM
  */
-class Nist(
+class Nist @JvmOverloads constructor(
     val asianSupport: Boolean = false,
     val nGram: Int = 5
 ) : IEvaluate {
@@ -102,7 +102,7 @@ class Nist(
                         (informationWeights[_ngram] ?: 0.0).times(count)
                     }.sum()
                     val denominator = hypNgrams.values().sum()
-                    val precision = 0.0.takeIf { denominator == 0 } ?: numerator / denominator
+                    val precision = 0.0.takeIf { denominator == 0 } ?: (numerator / denominator)
                     nistPrecisionPerRef.add(precision)
                     nistNumeratorPerRef.add(numerator)
                     nistDenominatorPerRef.add(denominator)
@@ -131,7 +131,7 @@ class Nist(
             nistPrecision += precision
         }
         // Eqn 3 in Doddington(2002)
-        return EvaScore((nistPrecision * nistLengthPenalty(lRef, lSys)).toFloat())
+        return EvaScore((nistPrecision * nistLengthPenalty(lRef, lSys)))
     }
 
     /**
