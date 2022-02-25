@@ -1,6 +1,5 @@
 package com.newtranx.eval.metrics.sacre
 
-import com.newtranx.eval.metrics.Score
 import com.newtranx.eval.metrics.TerScore
 import com.newtranx.eval.tokenizers.TokenizerTer
 import com.newtranx.eval.utils.sumOfLists
@@ -9,6 +8,23 @@ import com.newtranx.eval.utils.translationEditRate
 /**
  * @Author: anson
  * @Date: 2022/2/1 4:26 PM
+ *
+ * Translation edit rate (TER). A near-exact reimplementation of the Tercom
+ * algorithm, produces identical results on all "sane" outputs.
+ *
+ * Tercom original implementation: https://github.com/jhclark/tercom
+ *
+ * The beam edit distance algorithm uses a slightly different approach (we stay
+ * around the diagonal which is faster, at least in Python) so in some
+ * (extreme) corner cases, the output could differ.
+ *
+ * Caching in the edit distance is based partly on the PyTer package by Hiroyuki
+ * Tanaka (MIT license). (https://github.com/aflc/pyter)
+ *
+ * @param normalized: If `True`, applies basic tokenization to sentences.
+ * @param noPunct: If `True`, removes punctuations from sentences.
+ * @param asianSupport: If `True`, adds support for Asian character processing.
+ * @param caseSensitive: If `True`, does not lowercase sentences.
  */
 class Ter @JvmOverloads constructor(
     val normalized: Boolean = false,

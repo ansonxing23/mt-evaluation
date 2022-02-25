@@ -85,13 +85,4 @@ class Tester {
         println(score)
     }
 
-    @Test
-    fun testFile() {
-        val src = File("E:\\机翻评测系统\\3501-en.txt")
-        val ref = File("E:\\机翻评测系统\\3501-new.txt")
-        val hyps = src.readLines()
-        val refs = ref.readLines()
-        val score = meteor.corpusScore(hyps, listOf(refs))
-        println(score)
-    }
 }
