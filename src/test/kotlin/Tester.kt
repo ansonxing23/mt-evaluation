@@ -1,5 +1,4 @@
 import com.newtranx.eval.metrics.MetricUtil
-import com.newtranx.eval.metrics.enums.Language
 import com.newtranx.eval.metrics.nltk.Meteor
 import org.junit.Test
 
@@ -13,15 +12,14 @@ class Tester {
         val hypothesis = listOf("我是中国人", "我爱吃水果")
         private val ref1 = listOf("我是中国人", "我爱水果")
         private val ref2 = listOf("中国是我", "我爱吃水果")
-        val language = Language.ZH
         val references = listOf(ref1, ref2)
         val path = Meteor::class.java.getResource("/wordnet").path
         val wordnet = MetricUtil.buildWordnet(path)
 
-        val bleu = MetricUtil.buildBleuMetric(language)
+        val bleu = MetricUtil.buildBleuMetric("zh")
         val ter = MetricUtil.buildTerMetric(normalized = true, asianSupport = true)
         val nist = MetricUtil.buildNistMetric(asianSupport = true)
-        val meteor = MetricUtil.buildMeteorMetric(wordnet, language)
+        val meteor = MetricUtil.buildMeteorMetric(wordnet, "zh")
 
         val hyp = "我爱吃水果"
         val refs = listOf("我爱吃水果", "我爱吃果果")

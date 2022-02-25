@@ -1,11 +1,11 @@
 package com.newtranx.eval.metrics
 
-import com.newtranx.eval.metrics.enums.Language
 import com.newtranx.eval.metrics.nltk.Meteor
 import com.newtranx.eval.metrics.nltk.Nist
 import com.newtranx.eval.metrics.sacre.Bleu
 import com.newtranx.eval.metrics.sacre.Ter
 import com.newtranx.eval.tokenizers.TokenizerUtil
+import com.newtranx.eval.utils.LanguageUtil
 import edu.mit.jwi.IDictionary
 import edu.mit.jwi.RAMDictionary
 import edu.mit.jwi.data.ILoadPolicy
@@ -20,7 +20,7 @@ import java.net.URLDecoder
 class MetricUtil {
     companion object {
         @JvmStatic
-        fun buildBleuMetric(language: Language): IEvaluate {
+        fun buildBleuMetric(language: String): IEvaluate {
             val tokenizer = TokenizerUtil.buildTokenizer(language)
             return Bleu(
                 tokenizer = tokenizer,
@@ -60,17 +60,15 @@ class MetricUtil {
         @JvmOverloads
         fun buildMeteorMetric(
             wordnet: IDictionary,
-            language: Language,
+            language: String,
             lowercase: Boolean = true,
             alpha: Float = 0.9F,
             beta: Int = 3,
             gamma: Float = 0.5F
         ): IEvaluate {
-            val stemmer = findStemmer(language)
-            val asianSupport = when (language) {
-                Language.ZH, Language.KO, Language.JA -> true
-                else -> false
-            }
+            val lang = LanguageUtil.displayLanguage(language)
+            val stemmer = findStemmer(lang)
+            val asianSupport = LanguageUtil.isAsian(lang)
             return Meteor(
                 wordnet = wordnet,
                 stemmer = stemmer,
@@ -87,11 +85,11 @@ class MetricUtil {
             return RAMDictionary(File(URLDecoder.decode(path, "UTF-8")), ILoadPolicy.IMMEDIATE_LOAD)
         }
 
-        private fun findStemmer(language: Language) = when (language) {
-            Language.EN -> EnglishStemmer()
-            Language.FR -> FrenchStemmer()
-            Language.DE -> German2Stemmer()
-            Language.ES -> SpanishStemmer()
+        private fun findStemmer(language: String) = when (language) {
+            "English" -> EnglishStemmer()
+            "French" -> FrenchStemmer()
+            "German" -> German2Stemmer()
+            "Spanish" -> SpanishStemmer()
             else -> PorterStemmer()
         }
     }

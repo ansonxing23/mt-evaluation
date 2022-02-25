@@ -1,6 +1,6 @@
 package com.newtranx.eval.tokenizers
 
-import com.newtranx.eval.metrics.enums.Language
+import com.newtranx.eval.utils.LanguageUtil
 
 /**
  * @Author: anson
@@ -10,13 +10,14 @@ class TokenizerUtil {
     companion object {
         @JvmStatic
         @JvmOverloads
-        fun buildTokenizer(language: Language): ITokenizer {
+        fun buildTokenizer(language: String): ITokenizer {
+            val lang = LanguageUtil.displayLanguage(language)
             return when (language) {
-                Language.DE, Language.EN,
-                Language.ES, Language.FR -> TokenizerEuro(language)
-                Language.ZH -> TokenizerZh()
-                Language.JA -> TokenizerJa()
-                else -> TokenizerEuro(Language.UNSPECIFIED)
+                "German", "English",
+                "Spanish", "French" -> TokenizerEuro(lang)
+                "Chinese" -> TokenizerZh()
+                "Japanese" -> TokenizerJa()
+                else -> TokenizerEuro("Unspecified")
             }
         }
     }

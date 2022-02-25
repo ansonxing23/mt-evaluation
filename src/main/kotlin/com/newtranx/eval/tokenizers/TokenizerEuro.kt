@@ -1,6 +1,5 @@
 package com.newtranx.eval.tokenizers
 
-import com.newtranx.eval.metrics.enums.Language
 import edu.stanford.nlp.pipeline.CoreDocument
 import edu.stanford.nlp.pipeline.StanfordCoreNLP
 import java.util.*
@@ -10,7 +9,7 @@ import java.util.*
  * @Date: 2022/1/30 5:18 PM
  */
 class TokenizerEuro(
-    language: Language
+    language: String
 ) : ITokenizer {
     private val props = Properties()
 
@@ -21,7 +20,7 @@ class TokenizerEuro(
     init {
         props.setProperty("annotators", "tokenize")
         props.setProperty("tokenize.options", "splitHyphenated=false,americanize=false")
-        props.setProperty("tokenize.language", language.name)
+        props.setProperty("tokenize.language", language)
         pipeline = StanfordCoreNLP(props)
     }
 
