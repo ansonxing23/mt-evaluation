@@ -1,5 +1,6 @@
 package com.newtranx.eval.metrics.sacre
 
+import com.newtranx.eval.metrics.Score
 import com.newtranx.eval.metrics.TerScore
 import com.newtranx.eval.tokenizers.TokenizerTer
 import com.newtranx.eval.utils.sumOfLists

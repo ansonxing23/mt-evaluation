@@ -2,6 +2,7 @@ package com.newtranx.eval.metrics.nltk
 
 import com.newtranx.eval.metrics.IEvaluate
 import com.newtranx.eval.metrics.EvaScore
+import com.newtranx.eval.metrics.Score
 import com.newtranx.eval.utils.Counter
 import com.newtranx.eval.utils.extractNgrams
 import com.newtranx.eval.utils.map
@@ -132,6 +133,10 @@ class Nist @JvmOverloads constructor(
         }
         // Eqn 3 in Doddington(2002)
         return EvaScore((nistPrecision * nistLengthPenalty(lRef, lSys)))
+    }
+
+    override fun singleSentenceScore(hypothesis: String, reference: String): Score {
+        return corpusScore(listOf(hypothesis), listOf(listOf(reference)))
     }
 
     /**

@@ -3,6 +3,7 @@ package com.newtranx.eval.metrics.nltk
 import com.newtranx.eval.metrics.EvaScore
 import com.newtranx.eval.metrics.IEvaluate
 import com.newtranx.eval.metrics.MetricUtil
+import com.newtranx.eval.metrics.Score
 import edu.mit.jwi.IDictionary
 import edu.mit.jwi.RAMDictionary
 import edu.mit.jwi.data.ILoadPolicy
@@ -80,6 +81,11 @@ class Meteor @JvmOverloads constructor(
             score
         }
         val score = total / hypotheses.size
+        return EvaScore(score)
+    }
+
+    override fun singleSentenceScore(hypothesis: String, reference: String): Score {
+        val score = singleMeteorScore(hypothesis, reference)
         return EvaScore(score)
     }
 

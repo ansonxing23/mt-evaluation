@@ -7,4 +7,5 @@ package com.newtranx.eval.metrics
 interface IEvaluate {
     fun sentenceScore(hypothesis: String, references: List<String>): Score
     fun corpusScore(hypotheses: List<String>, references: List<List<String>>): Score
+    fun singleSentenceScore(hypothesis: String, reference: String): Score
 }

@@ -47,6 +47,10 @@ abstract class Base : IEvaluate {
         return aggregateAndCompute(stats, true)
     }
 
+    override fun singleSentenceScore(hypothesis: String, reference: String): Score {
+        return sentenceScore(hypothesis, listOf(reference))
+    }
+
     /**
      * Reads the corpus and returns sentence-level match statistics for
      * faster re-computations esp. during statistical tests.
