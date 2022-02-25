@@ -110,7 +110,7 @@ abstract class Base : IEvaluate {
         zip(*references.toTypedArray()).forEach { refs ->
             // remove undefined / empty references
             // i.e. we have fewer references for this particular sentence
-            var lines = refs.filterNot { it.isEmpty() }
+            var lines = refs
 
             if (lines.isEmpty())
                 throw Exception("Empty or `None` reference sentence found.")

@@ -132,12 +132,6 @@ inline fun <T> Counter<T>.forEach(action: (key: T, count: Int) -> Unit) {
     }
 }
 
-fun main() {
-    val a = extractAllWordNgrams("how word are you hello word are", 1, 4)
-    println(a)
-}
-
-
 /**
  * Floors the log function
  * @param num: the number

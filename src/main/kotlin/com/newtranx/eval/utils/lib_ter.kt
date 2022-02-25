@@ -249,9 +249,9 @@ fun flipTrace(trace: String): String {
 fun traceToAlignment(trace: String): Triple<Map<Int, Int>, List<Int>, List<Int>> {
     var posHyp = -1
     var posRef = -1
-    var hypErr = mutableListOf<Int>()
-    var refErr = mutableListOf<Int>()
-    var align = mutableMapOf<Int, Int>()
+    val hypErr = mutableListOf<Int>()
+    val refErr = mutableListOf<Int>()
+    val align = mutableMapOf<Int, Int>()
 
     // we are rewriting a into b
     for (op in trace) {

@@ -12,13 +12,11 @@ import kotlin.math.*
  * Computes BLEU for a single sentence against a single (or multiple) reference(s).
  * Disclaimer: Computing BLEU at the sentence level is not its intended use as
  * BLEU is a corpus-level metric.
- * @param hypothesis: A single hypothesis string.
- * @param references: A sequence of reference strings.
- * @param smooth_method: The smoothing method to use ('floor', 'add-k', 'exp' or 'none')
- * @param smooth_value: The smoothing value for `floor` and `add-k` methods. `None` falls back to default value.
+ * @param smoothMethod: The smoothing method to use ('floor', 'add-k', 'exp' or 'none')
+ * @param smoothValue: The smoothing value for `floor` and `add-k` methods. `None` falls back to default value.
  * @param lowercase: Lowercase the data
- * @param tokenize: The tokenizer to use
- * @param use_effective_order: Don't take into account n-gram orders without any match.
+ * @param tokenizer: The tokenizer to use
+ * @param effectiveOrder: Don't take into account n-gram orders without any match.
  * @return Returns a `BLEUScore` object.
  */
 data class Bleu @JvmOverloads constructor(

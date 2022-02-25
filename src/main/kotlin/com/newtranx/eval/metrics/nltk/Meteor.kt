@@ -20,18 +20,18 @@ import kotlin.math.pow
  * @Date: 2022/2/20 12:17 AM
  */
 /**
- * :param stemmer: nltk.stem.api.StemmerI object (default PorterStemmer())
+ * @param stemmer: nltk.stem.api.StemmerI object (default PorterStemmer())
  * :type stemmer: nltk.stem.api.StemmerI or any class that implements a stem method
- * :param wordnet: a wordnet corpus reader object (default nltk.corpus.wordnet)
+ * @param wordnet: a wordnet corpus reader object (default nltk.corpus.wordnet)
  * :type wordnet: WordNetCorpusReader
- * :param alpha: parameter for controlling relative weights of precision and recall.
+ * @param alpha: parameter for controlling relative weights of precision and recall.
  * :type alpha: float
- * :param beta: parameter for controlling shape of penalty as a
+ * @param beta: parameter for controlling shape of penalty as a
  * function of as a function of fragmentation.
  * :type beta: float
- * :param gamma: relative weight assigned to fragmentation penality.
+ * @param gamma: relative weight assigned to fragmentation penality.
  * :type gamma: float
- * :return: The sentence-level METEOR score.
+ * @return: The sentence-level METEOR score.
  */
 class Meteor @JvmOverloads constructor(
     val stemmer: SnowballProgram = PorterStemmer(),
@@ -84,13 +84,11 @@ class Meteor @JvmOverloads constructor(
     }
 
     /**
-     * :param references: reference sentences
+     * @param reference: reference sentences
      * :type references: list(str)
-     * :param hypothesis: a hypothesis sentence
+     * @param hypothesis: a hypothesis sentence
      * :type hypothesis: str
-     * :param preprocess: preprocessing function (default str.lower)
-     * :type preprocess: method
-     * :rtype: float
+     * @return: score
      */
     fun singleMeteorScore(hypothesis: String, reference: String): Double {
         val enumHypothesis = generateEnums(hypothesis)
@@ -107,7 +105,8 @@ class Meteor @JvmOverloads constructor(
             val chunkCount = countChunks(matches).toDouble()
             val fragFrac = chunkCount / matchesCount
             val penalty = gamma * fragFrac.pow(beta)
-            (1 - penalty) * fMean
+            val score = (1 - penalty) * fMean
+            0.0.takeIf { score.isNaN() } ?: score
         } catch (e: Exception) {
             0.0
         }
@@ -143,7 +142,6 @@ class Meteor @JvmOverloads constructor(
      *
      * @param enum_hypothesis_list: enumerated hypothesis list
      * @param enum_reference_list: enumerated reference list
-     * @param stemmer: nltk.stem.api.StemmerI object (default PorterStemmer())
      * @return: sorted list of matched tuples, unmatched hypothesis list,
      * unmatched reference list
      * :rtype: list of tuples, list of tuples, list of tuples
@@ -217,11 +215,11 @@ class Meteor @JvmOverloads constructor(
      * a word mapping between enum_hypothesis_list and enum_reference_list
      * based on the enumerated word id.
      *
-     * :param enum_hypothesis_list: enumerated hypothesis list
+     * @param enumHypothesisList: enumerated hypothesis list
      * :type enum_hypothesis_list: list of tuples
-     * :param enum_reference_list: enumerated reference list
+     * @param enumReferenceList: enumerated reference list
      * :type enum_reference_list: list of 2D tuples
-     * :return: enumerated matched tuples, enumerated unmatched hypothesis tuples,
+     * @return: enumerated matched tuples, enumerated unmatched hypothesis tuples,
      * enumerated unmatched reference tuples
      * :rtype: list of 2D tuples, list of 2D tuples,  list of 2D tuples
      */
@@ -252,10 +250,8 @@ class Meteor @JvmOverloads constructor(
      * if any synonym of a hypothesis word is the exact match
      * to the reference word.
      *
-     * @param enum_hypothesis_list: enumerated hypothesis list
-     * @param enum_reference_list: enumerated reference list
-     * @param wordnet: a wordnet corpus reader object (default nltk.corpus.wordnet)
-     * type wordnet: WordNetCorpusReader
+     * @param enumHypothesisList: enumerated hypothesis list
+     * @param enumReferenceList: enumerated reference list
      * @return: list of matched tuples, unmatched hypothesis list, unmatched reference list
      * rtype:  list of tuples, list of tuples, list of tuples
      */
