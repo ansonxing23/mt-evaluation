@@ -14,7 +14,6 @@ Implement four evaluation methods for machine translation. Most open source eval
 * ES("es", "Spanish")
 * ZH("zh", "Chinese")
 * JA("ja", "Japanese")
-* KO("ko", "Korean")
 
 ## Usage
 ### Corpus Level
@@ -23,9 +22,8 @@ BLEU
 val hypothesis = listOf("how are you?", "I'm fine!")
 val ref1 = listOf("how are you?", "I'm fine!")
 val ref2 = listOf("how do you do?", "I'm ok!")
-val language = Language.EN
 val references = listOf(ref1, ref2)
-val bleu = MetricUtil.buildBleuMetric(language)
+val bleu = MetricUtil.buildBleuMetric("en")
 val score = bleu.corpusScore(hypothesis, references)
 ```
 
@@ -44,12 +42,11 @@ METEOR
 val hypothesis = listOf("how are you?", "I'm fine!")
 val ref1 = listOf("how are you?", "I'm fine!")
 val ref2 = listOf("how do you do?", "I'm ok!")
-val language = Language.EN
 val references = listOf(ref1, ref2)
 
 val path = "/home/wordnet"
 val wordnet = MetricUtil.buildWordnet(path)
-val meteor = MetricUtil.buildMeteorMetric(wordnet, language)
+val meteor = MetricUtil.buildMeteorMetric(wordnet, "en")
 val score = meteor.corpusScore(hypothesis, references)
 ```
 
@@ -69,8 +66,7 @@ BLEU
 ```
 val hypothesis = "how are you?"
 val references = listOf("how are you?", "how do you do?")
-val language = Language.EN
-val bleu = MetricUtil.buildBleuMetric(language)
+val bleu = MetricUtil.buildBleuMetric("en")
 val score = bleu.sentenceScore(hypothesis, references)
 ```
 
@@ -90,7 +86,7 @@ val language = Language.EN
 
 val path = "/home/wordnet"
 val wordnet = MetricUtil.buildWordnet(path)
-val meteor = MetricUtil.buildMeteorMetric(wordnet, language)
+val meteor = MetricUtil.buildMeteorMetric(wordnet, "en")
 val score = meteor.sentenceScore(hypothesis, references)
 ```
 
