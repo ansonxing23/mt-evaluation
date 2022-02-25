@@ -98,3 +98,122 @@ val references = listOf("how are you?", "how do you do?")
 val nist = MetricUtil.buildNistMetric(asianSupport = true)
 val score = nist.sentenceScore(hypothesis, references)
 ```
+
+## API
+### IEvaluate
+
+#### sentenceScore(hypothesis: String, references: List<String>): Score
+  
+Evaluate hypothesis with multi references.
+  
+#### singleSentenceScore(hypothesis: String, reference: String): Score
+
+Evaluate hypothesis with single reference.
+  
+#### corpusScore(hypotheses: List<String>, references: List<List<String>>): Score
+
+Evaluate whole corpus
+
+### MetricUtil.buildBleuMetric(language: String): IEvaluate
+
+Build BLEU metric.
+
+#### language
+
+Type: `String`
+
+Must be correct format of Locale string, including ISO code and language in English.
+
+ex. `zh` `Chinese` `en` `English`
+
+### MetricUtil.buildTerMetric(normalized: Boolean, noPunct: Boolean, asianSupport: Boolean, caseSensitive: Boolean): IEvaluate
+
+Build TER metric.
+
+#### normalized
+
+Type: `Boolean`
+
+If `True`, applies basic tokenization to sentences.
+
+#### noPunct
+
+Type: `Boolean`
+
+If `True`, removes punctuations from sentences.
+
+#### asianSupport
+
+Type: `Boolean`
+
+If `True`, adds support for Asian character processing.
+
+#### caseSensitive
+
+Type: `Boolean`
+
+If `True`, does not lowercase sentences.
+
+### MetricUtil.buildNistMetric(asianSupport: Boolean, nGram: Int): IEvaluate
+
+Build NIST metric.
+
+#### nGram
+
+Type: `Int`
+
+highest n-gram order
+
+#### asianSupport
+
+Type: `Boolean`
+
+If `True`, adds support for Asian character processing.
+
+### MetricUtil.buildMeteorMetric(wordnet: IDictionary, language: String, lowercase: Boolean, alpha: Float, beta: Int, gamma: Float): IEvaluate
+
+Build Meteor metric.
+
+#### wordnet
+
+Type: `Boolean`
+
+If `True`, applies basic tokenization to sentences.
+
+#### language
+
+Type: `String`
+
+Must be correct format of Locale string, including ISO code and language in English.
+
+ex. `zh` `Chinese` `en` `English`
+
+#### lowercase
+
+Type: `Boolean`
+
+If `True`, lowercase the input sentence
+
+#### alpha
+
+Type: `Float`
+
+parameter for controlling relative weights of precision and recall.
+
+#### alpha
+
+Type: `Float`
+
+parameter for controlling relative weights of precision and recall.
+
+#### beta
+
+Type: `Int`
+
+parameter for controlling shape of penalty as a function of as a function of fragmentation.
+
+#### gamma
+
+Type: `Float`
+
+relative weight assigned to fragmentation penality.
