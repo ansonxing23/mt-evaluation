@@ -15,6 +15,17 @@ Implement four evaluation methods for machine translation. Most open source eval
 * ZH("zh", "Chinese")
 * JA("ja", "Japanese")
 
+## How to use
+### Maven
+Make sure you add the dependency below to your pom.xml before building your project.
+```
+<dependency>
+  <groupId>com.newtranx</groupId>
+  <artifactId>mt-metrics</artifactId>
+  <version>1.0.1</version>
+</dependency>
+```
+
 ## Usage
 ### Corpus Level
 BLEU
