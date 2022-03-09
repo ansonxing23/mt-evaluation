@@ -50,9 +50,9 @@ class Ter @JvmOverloads constructor(
      * @return: A `TERScore` object.
      */
     private fun computeScoreFromStats(stats: List<Double>): TerScore {
-        val totalEdits = stats[0].toFloat()
-        val sumRefLengths = stats[1].toFloat()
-        val score = (totalEdits / sumRefLengths).takeIf { sumRefLengths > 0 } ?: 1F
+        val totalEdits = stats[0]
+        val sumRefLengths = stats[1]
+        val score = (totalEdits / sumRefLengths).takeIf { sumRefLengths > 0 } ?: 1.0
         return TerScore(100 * score, totalEdits, sumRefLengths)
     }
 

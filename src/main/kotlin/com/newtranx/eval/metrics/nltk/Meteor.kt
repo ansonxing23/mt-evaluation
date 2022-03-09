@@ -1,18 +1,12 @@
 package com.newtranx.eval.metrics.nltk
 
-import com.newtranx.eval.metrics.EvaScore
 import com.newtranx.eval.metrics.IEvaluate
-import com.newtranx.eval.metrics.MetricUtil
 import com.newtranx.eval.metrics.Score
 import edu.mit.jwi.IDictionary
-import edu.mit.jwi.RAMDictionary
-import edu.mit.jwi.data.ILoadPolicy
 import edu.mit.jwi.item.POS
 import edu.mit.jwi.morph.WordnetStemmer
 import org.tartarus.snowball.SnowballProgram
 import org.tartarus.snowball.ext.PorterStemmer
-import java.io.File
-import java.net.URLDecoder
 import kotlin.math.pow
 
 
@@ -53,14 +47,14 @@ class Meteor @JvmOverloads constructor(
         wordnet.open()
     }
 
-    override fun sentenceScore(hypothesis: String, references: List<String>): EvaScore {
+    override fun sentenceScore(hypothesis: String, references: List<String>): Score {
         val score = references.map { reference ->
             singleMeteorScore(hypothesis, reference)
         }.maxOrNull() ?: 0.0
-        return EvaScore(score)
+        return Score(score)
     }
 
-    override fun corpusScore(hypotheses: List<String>, references: List<List<String>>): EvaScore {
+    override fun corpusScore(hypotheses: List<String>, references: List<List<String>>): Score {
         val totalHyp = hypotheses.size
         references.forEach {
             if (totalHyp != it.size)
@@ -81,12 +75,16 @@ class Meteor @JvmOverloads constructor(
             score
         }
         val score = total / hypotheses.size
-        return EvaScore(score)
+        return Score(score)
+    }
+
+    override fun singleCorpusScore(hypotheses: List<String>, reference: List<String>): Score {
+        return corpusScore(hypotheses, listOf(reference))
     }
 
     override fun singleSentenceScore(hypothesis: String, reference: String): Score {
         val score = singleMeteorScore(hypothesis, reference)
-        return EvaScore(score)
+        return Score(score)
     }
 
     /**

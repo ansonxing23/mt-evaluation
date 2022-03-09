@@ -1,7 +1,6 @@
 package com.newtranx.eval.metrics.nltk
 
 import com.newtranx.eval.metrics.IEvaluate
-import com.newtranx.eval.metrics.EvaScore
 import com.newtranx.eval.metrics.Score
 import com.newtranx.eval.utils.Counter
 import com.newtranx.eval.utils.extractNgrams
@@ -17,11 +16,11 @@ class Nist @JvmOverloads constructor(
     val nGram: Int = 5
 ) : IEvaluate {
 
-    override fun sentenceScore(hypothesis: String, references: List<String>): EvaScore {
+    override fun sentenceScore(hypothesis: String, references: List<String>): Score {
         return corpusScore(listOf(hypothesis), references.map { listOf(it) })
     }
 
-    override fun corpusScore(hypes: List<String>, refs: List<List<String>>): EvaScore {
+    override fun corpusScore(hypes: List<String>, refs: List<List<String>>): Score {
         val total = hypes.size
         refs.forEach {
             if (total != it.size)
@@ -132,7 +131,11 @@ class Nist @JvmOverloads constructor(
             nistPrecision += precision
         }
         // Eqn 3 in Doddington(2002)
-        return EvaScore((nistPrecision * nistLengthPenalty(lRef, lSys)))
+        return Score((nistPrecision * nistLengthPenalty(lRef, lSys)))
+    }
+
+    override fun singleCorpusScore(hypotheses: List<String>, reference: List<String>): Score {
+        return corpusScore(hypotheses, listOf(reference))
     }
 
     override fun singleSentenceScore(hypothesis: String, reference: String): Score {

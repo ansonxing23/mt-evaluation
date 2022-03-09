@@ -34,6 +34,14 @@ abstract class Base : IEvaluate {
         return aggregateAndCompute(stats)
     }
 
+    override fun singleCorpusScore(hypotheses: List<String>, reference: List<String>): Score {
+        // Collect corpus stats
+        val stats = extractCorpusStatistics(hypotheses, listOf(reference))
+
+        // Compute the actual system score
+        return aggregateAndCompute(stats)
+    }
+
     /**
      * Compute the metric for a single sentence against a single (or multiple) reference(s).
      * @param hypothesis: A single hypothesis string.

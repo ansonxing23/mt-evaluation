@@ -115,7 +115,7 @@ data class Bleu @JvmOverloads constructor(
 
         // Early stop if there are no matches (#141)
         if (correct.isEmpty()) {
-            return BLEUScore(0.0F, correct, total, precisions.toList(), bp, sysLen, refLen)
+            return BLEUScore(0.0, correct, total, precisions.toList(), bp, sysLen, refLen)
         }
         var smoothMteval = 1.0
         var effOrder = maxNgramOrder
@@ -148,7 +148,7 @@ data class Bleu @JvmOverloads constructor(
             }
         }
         // Compute BLEU score
-        val score = bp * exp(precisions.subList(0, effOrder).map { myLog(it) }.sum() / effOrder).toFloat()
+        val score = bp * exp(precisions.subList(0, effOrder).map { myLog(it) }.sum() / effOrder)
         return BLEUScore(score, correct, total, precisions, bp, sysLen, refLen)
     }
 
