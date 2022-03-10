@@ -95,6 +95,7 @@ class Meteor @JvmOverloads constructor(
      * @return: score
      */
     fun singleMeteorScore(hypothesis: String, reference: String): Double {
+        if (hypothesis.isBlank()) return 0.0
         val enumHypothesis = generateEnums(hypothesis)
         val enumReference = generateEnums(reference)
         val translationLength = enumHypothesis.size
@@ -110,7 +111,7 @@ class Meteor @JvmOverloads constructor(
             val fragFrac = chunkCount / matchesCount
             val penalty = gamma * fragFrac.pow(beta)
             val score = (1 - penalty) * fMean
-            0.0.takeIf { score.isNaN() } ?: score
+            (0.0.takeIf { score.isNaN() } ?: score) * 100
         } catch (e: Exception) {
             0.0
         }
