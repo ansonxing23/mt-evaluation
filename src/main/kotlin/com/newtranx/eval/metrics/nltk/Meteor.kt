@@ -207,7 +207,7 @@ class Meteor @JvmOverloads constructor(
         }
 
         val enumUnmatRefList = listOf<MutableList<Any>>(mutableListOf(), mutableListOf())
-            .takeIf { stemmedEnumList1.size > 0 } ?: listOf()
+            .takeIf { stemmedEnumList2.size > 0 } ?: listOf()
         stemmedEnumList2.forEach {
             enumUnmatRefList[0].add(it.first)
             enumUnmatRefList[1].add(it.second)
