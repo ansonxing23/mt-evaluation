@@ -496,14 +496,15 @@ data class BeamEditDistance(val words_ref: List<String>) {
      * @return: Tuple (start position, dist).
      */
     private fun findCache(words_hyp: List<String>): Pair<Int, MutableList<MutableList<Pair<Int, Char>>>> {
-        val node = cache
+        var node = cache
         var startPosition = 0
-        var dist = mutableListOf(initialRow)
+        val dist = mutableListOf(initialRow)
         for (word in words_hyp) {
             if (node.contains(word)) {
                 startPosition += 1
                 val nodeChild = node[word]
                 if (nodeChild != null) {
+                    node = nodeChild.child
                     dist.add(nodeChild.row)
                 }
             } else break
