@@ -23,10 +23,13 @@ class LanguageUtil {
 
         fun check(str: String): Boolean {
             val lang = str.toLowerCase()
-            if (!languages.containsKey(lang) && !languages.containsValue(lang)) {
-                throw Exception("Language: $str is not exist!")
+            if (languages.containsKey(lang)) {
+                return true
             }
-            return true
+            if (languages.containsValue(lang)) {
+                return true
+            }
+            throw Exception("Language: $str is not exist!")
         }
 
         fun displayLanguage(lang: String): String {

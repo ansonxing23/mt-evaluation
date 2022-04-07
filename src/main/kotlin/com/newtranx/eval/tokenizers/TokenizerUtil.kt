@@ -11,8 +11,7 @@ class TokenizerUtil {
         @JvmStatic
         @JvmOverloads
         fun buildTokenizer(language: String): ITokenizer {
-            val lang = LanguageUtil.displayLanguage(language)
-            return when (language) {
+            return when (val lang = LanguageUtil.displayLanguage(language)) {
                 "German", "English",
                 "Spanish", "French" -> TokenizerEuro(lang)
                 "Chinese" -> TokenizerZh()
