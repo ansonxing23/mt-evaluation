@@ -24,12 +24,30 @@ class TokenizerEuro(
         pipeline = StanfordCoreNLP(props)
     }
 
+    private fun preprocess(text: String): String {
+        var line = if (text.endsWith("-")) {
+            text.replace("-", "")
+        } else text
+        line = line.replace("<skipped>", "")
+            .replace("&quot;", "\"")
+            .replace("&amp;", "&")
+            .replace("&lt;", "<")
+            .replace("&gt;", ">")
+        line = Regex("([0-9])(-|~|\\+|_)")
+            .replace(line) { grp ->
+                grp.groupValues.drop(1).joinToString("") {
+                    "$it "
+                }
+            }
+        return line
+    }
+
     override fun parse(text: String): String {
         return rawParse(text).joinToString(" ")
     }
 
     override fun rawParse(text: String): List<String> {
-        val doc = CoreDocument(text)
+        val doc = CoreDocument(preprocess(text))
         pipeline.annotate(doc)
         return doc.tokens().map { it.word() }
     }

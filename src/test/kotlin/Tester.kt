@@ -14,7 +14,7 @@ class Tester {
         private val ref1 = listOf("我是中国人", "我爱吃水果")
         private val ref2 = listOf("中国是我", "我爱吃水果")
         val references = listOf(ref1)
-        val path = Meteor::class.java.getResource("/wordnet").path
+        val path = System.getProperty("user.dir") + File.separator + "wordnet"
         val wordnet = MetricUtil.buildWordnet(path)
 
         val bleu = MetricUtil.buildBleuMetric("en")

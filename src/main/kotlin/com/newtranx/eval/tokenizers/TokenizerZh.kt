@@ -65,9 +65,3 @@ class TokenizerZh : ITokenizer {
         return parse(text).split(" ")
     }
 }
-
-fun main() {
-    val tok = TokenizerZh()
-    val sent = tok.parse("4月17日，外交部发言人赵立坚主持例行记者会test.")
-    print(sent)
-}
