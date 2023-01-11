@@ -15,6 +15,11 @@ class LanguageUtil {
             Locale.setDefault(Locale.ENGLISH)
             languages = Locale.getAvailableLocales().fold(mutableMapOf()) { acc, locale ->
                 if (locale.toString().toLowerCase().isNotBlank()) {
+                    val keys = locale.toString().toLowerCase().split("_")
+                    if (keys.size > 1) {
+                        acc[keys[0]] = locale.displayLanguage
+                        acc[keys[1]] = locale.displayLanguage
+                    }
                     acc[locale.toString().toLowerCase()] = locale.displayLanguage
                 }
                 acc
