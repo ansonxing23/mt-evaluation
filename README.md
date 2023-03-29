@@ -22,7 +22,7 @@ Make sure you add the dependency below to your pom.xml before building your proj
 <dependency>
   <groupId>com.newtranx</groupId>
   <artifactId>mt-metrics</artifactId>
-  <version>1.1.4</version>
+  <version>1.1.6</version>
 </dependency>
 ```
 
