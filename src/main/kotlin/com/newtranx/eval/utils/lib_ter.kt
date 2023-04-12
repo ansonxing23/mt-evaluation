@@ -188,8 +188,11 @@ fun performShift(words: List<String>, start: Int, length: Int, target: Int): Lis
         }
         else -> {
             // shift within the shifted string
-            words.subList(0, start) + words.subList(start + length, length + target) +
-                    words.subList(start, start + length) + words.subList(length + target, words.size)
+            val end = if (length + target < words.size)
+                            length + target
+                        else words.size
+            words.subList(0, start) + words.subList(start + length, end) +
+                    words.subList(start, start + length) + words.subList(end, words.size)
         }
     }
 }
